@@ -1,6 +1,6 @@
 include $(top_srcdir)/gtester.make
 
-noinst_PROGRAMS = test-qcdm modepref ipv6pref
+noinst_PROGRAMS = test-qcdm modepref ipv6pref reset
 TEST_PROGS += test-qcdm
 
 INCLUDES = \
@@ -30,12 +30,21 @@ ipv6pref_SOURCES = ipv6pref.c
 ipv6pref_CPPFLAGS = $(MM_CFLAGS)
 ipv6pref_LDADD = $(MM_LIBS)
 
+reset_SOURCES = reset.c
+reset_CPPFLAGS = \
+	$(MM_CFLAGS) \
+	-I$(top_srcdir)/libqcdm/src \
+	-I$(top_srcdir)/src
+reset_LDADD = $(MM_LIBS)
+
 if QCDM_STANDALONE
 test_qcdm_LDADD += $(top_builddir)/src/libqcdm.la
 modepref_LDADD += $(top_builddir)/src/libqcdm.la
 ipv6pref_LDADD += $(top_builddir)/src/libqcdm.la
+reset_LDADD +=  $(top_builddir)/src/libqcdm.la
 else
 test_qcdm_LDADD += $(top_builddir)/libqcdm/src/libqcdm.la
 modepref_LDADD += $(top_builddir)/libqcdm/src/libqcdm.la
 ipv6pref_LDADD += $(top_builddir)/libqcdm/src/libqcdm.la
+reset_LDADD += $(top_builddir)/libqcdm/src/libqcdm.la
 endif
